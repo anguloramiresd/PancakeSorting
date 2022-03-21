@@ -17,8 +17,10 @@ It has been shown that for any stack of ___N___ pancakes, the minimum number of 
 There are simple algorithms, but inefficient for the purpose of the problem, these algorithms take ___2N - 3___ flips at most.
 
 There are numerous ways to represent this problem on a computer, including graphs, permutations, strings and lists. We will try to take as many approaches as possible during the development of this project.
+
 There are some interesting practical purposes - in comparative genomics for example, and there is an even more useful related problem of sorting by reversal.
-But who need practical uses of Sorting by Prefix Reversal when we can simply be hungry for sorted pancakes?
+
+  But who need practical uses of Sorting by Prefix Reversal when we can simply be hungry for sorted pancakes?
 
 Pancake sort can be reduced from the NP-Hard problem 3-SAT, which implies that Pancake Sorting is also NP-Hard.
 We can see the proof of such assertion in the following [paper](https://arxiv.org/abs/1111.0434v1).
