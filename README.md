@@ -22,7 +22,7 @@ There are numerous ways to represent this problem on a computer, including graph
 Pancake sort can be reduced from the NP-Hard problem 3-SAT, which implies that Pancake Sorting is also NP-Hard.
 We can see the proof of such assertion in the following [paper](https://arxiv.org/abs/1111.0434v1).
 
-There are some interesting practical purposes for this problem - in comparative genomics for example, and there is an even more useful related problem of sorting by reversal.
+There are some interesting practical purposes for this problem - in comparative genomics, or parallel processor networks, in which it can provide an effective routing algorithm between processors.
 
     But who needs practical uses of Sorting by Prefix Reversal when we can simply be hungry for sorted pancakes?
 
