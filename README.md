@@ -15,6 +15,7 @@ A _pancake number_ is the minimum number of flips needed to sort a given number 
 It has been shown that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between ___1.0714 N___ and ___1.6364 N___ flips, but there is not an exact formula yet.
 
 [Lower Bound paper](https://www.sciencedirect.com/science/article/pii/0012365X79900682?via%3Dihub)
+
 [Upper Bound paper](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)
 
 There are numerous ways to represent this problem on a computer, including graphs, permutations, strings and lists. We will try to take as many approaches as possible during the development of this project.
