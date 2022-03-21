@@ -12,7 +12,7 @@ Now let&#39;s picture a spatula, we can insert this spatula between two pancakes
 
 A _pancake number_ is the minimum number of flips needed to sort a given number of pancakes, where a stack of sorted pancakes has the biggest pancake at the bottom of the stack, and every pancake above the bottom one is smaller than the pancake below.
 
-It has been shown that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between ___1.0714 N___ and ___1.6364 N___ flips, but there is not an exact formula yet.[1](https://www.sciencedirect.com/science/article/pii/0012365X79900682?via%3Dihub)[2](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)
+It has been shown that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between ___1.0714 N___ and ___1.6364 N___ flips, but there is not an exact formula yet.[Lower Bound](https://www.sciencedirect.com/science/article/pii/0012365X79900682?via%3Dihub), [Upper Bound](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)
 
 There are simple algorithms, but inefficient for the purpose of the problem, these algorithms take ___2N - 3___ flips at most.
 
