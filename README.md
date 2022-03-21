@@ -26,7 +26,7 @@ Pancake sort can be reduced from the NP-Hard problem 3-SAT, which implies that P
 We can see the proof of such assertion in the following [paper](https://arxiv.org/abs/1111.0434v1).
 
 <p align="center">
-  <img src="https://img.favpng.com/1/4/22/pancake-breakfast-english-muffin-waffle-bacon-png-favpng-svq3yuXZXUZwZ4jyTR3seYrfE_t.jpg" width="650" title="pancakes">
+  <img src="https://img.favpng.com/1/4/22/pancake-breakfast-english-muffin-waffle-bacon-png-favpng-svq3yuXZXUZwZ4jyTR3seYrfE_t.jpg" width="350" title="pancakes">
 </p>
 
 
