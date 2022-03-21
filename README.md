@@ -4,9 +4,8 @@ Let&#39;s imagine we have a stack of n pancakes, one on top of another, and they
 
 Now let&#39;s picture a spatula, we can insert this spatula between two pancakes at any point of our stack, and flip all the pancakes that are on top of the spatula.
 
-![alt text](https://github.com/anguloramiresd/PancakeSorting/blob/main/pancakes.PNG)
 <p align="center">
-  <img src="https://github.com/anguloramiresd/PancakeSorting/blob/main/pancakes.PNG" width="350" title="hover text">
+  <img src="https://github.com/anguloramiresd/PancakeSorting/blob/main/pancakes.PNG" width="650" title="hover text">
 </p>
 
 A _pancake number_ is the minimum number of flips needed to sort a given number of pancakes, where a stack of sorted pancakes has the biggest pancake at the bottom of the stack, and every pancake above the bottom one is smaller than the pancake below.
