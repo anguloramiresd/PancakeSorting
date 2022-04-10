@@ -9,15 +9,24 @@
 
 class PancakePile {
 private:
-    std::vector<size_t> order_;
-    size_t num_pancakes_;
-    size_t SearchPancake(size_t pancake);
-    void Flip(size_t init);
+    size_t steps;
+    int Right(int val);
+    int Left(int val);
+    bool CheckType1(int val1, int val2);
+    bool CheckType2(int val1, int val2);
+    bool CheckType3(int val1, int val2);
+    std::vector<int> order_;
+    std::vector<int> positions_;
+    int num_pancakes_;
+    int SearchPancake(int pancake);
+    void Flip(int elements);
+    void Print(int pos_spatula);
 public:
-    explicit PancakePile(size_t size);
-    explicit PancakePile(const std::vector<size_t>& permutation);
+    explicit PancakePile(int size);
+    explicit PancakePile(const std::vector<int>& permutation);
     void Print();
-    size_t SortInitial();
+    size_t Sort_FirstAlgo();
+    size_t Sort_SecondAlgo();
 };
 
 
