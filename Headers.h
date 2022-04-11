@@ -5,9 +5,11 @@
 #ifndef PANCAKESORTING_HEADERS_H
 #define PANCAKESORTING_HEADERS_H
 
-#include <iostream>
-#include <vector>
-#include <random>
 #include <algorithm>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <random>
+#include <vector>
 
 #endif //PANCAKESORTING_HEADERS_H

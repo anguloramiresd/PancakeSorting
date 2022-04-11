@@ -21,12 +21,16 @@ private:
     int SearchPancake(int pancake);
     void Flip(int elements);
     void Print(int pos_spatula);
+    static void Flip(std::vector<int> &aux, int elements);
 public:
     explicit PancakePile(int size);
     explicit PancakePile(const std::vector<int>& permutation);
+    PancakePile(const PancakePile &other) = default;
+    ~PancakePile() = default;
     void Print();
     size_t Sort_FirstAlgo();
     size_t Sort_SecondAlgo();
+    size_t Sort_BruteForce();
 };
 
 
