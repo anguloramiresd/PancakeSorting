@@ -1,27 +1,17 @@
 #include "Headers.h"
-#include "PancakePile.h"
+#include "SortExhaustive.h"
+#include "Sort3Approximation.h"
+#include "Sort2Approximation.h"
 
-int main() {
-    size_t steps;
-    PancakePile pancakes(6);
-    PancakePile pancakes2(pancakes);
-    PancakePile pancakes3(pancakes);
-    pancakes.Print();
-    std::cout<<"Correct sol: \n";
-    steps = pancakes.Sort_BruteForce();
-    std::cout<<"Steps: "<<steps<<'\n';
-    pancakes.Print();
-
-    std::cout<<"\nFirst sol: \n";
-    pancakes2.Print();
-    steps = pancakes2.Sort_FirstAlgo();
-    std::cout<<"Steps: "<<steps<<'\n';
-    pancakes2.Print();
-
-    std::cout<<"\nSecond sol: \n";
-    pancakes3.Print();
-    steps = pancakes3.Sort_SecondAlgo();
-    std::cout<<"Steps: "<<steps<<'\n';
-    pancakes3.Print();
+int main(int argc, char* argv[]) {
+    SortExhaustive pancake_pile(7);
+    Sort3Approximation pancake_pile2(7);
+    Sort2Approximation pancake_pile3(7);
+    pancake_pile.Print();
+    std::cout<<pancake_pile.Sort()<<'\n';
+    pancake_pile2.Print();
+    std::cout<<pancake_pile2.Sort()<<'\n';
+    pancake_pile3.Print();
+    std::cout<<pancake_pile3.Sort()<<'\n';
     return 0;
 }
