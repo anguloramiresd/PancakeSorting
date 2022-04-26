@@ -34,6 +34,7 @@ int main() {
     std::sort(sorted.begin(), sorted.end());
 
     if (sorted != pancakes->GetPermutation()){
+        pancakes->Print();
         std::cout<<"Fail\n";
     }
     return 0;

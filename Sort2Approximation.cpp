@@ -5,59 +5,71 @@
 #include "Sort2Approximation.h"
 
 int Sort2Approximation::Sort() {
+    std::vector<int> sorted = order_;
+    std::sort(sorted.begin(), sorted.end());
     bool re_start = true;
+    int j_left, j_right;
 
     while (re_start) {
-        if(steps_ >= 4*num_pancakes_){
+        if(steps_ > 4*num_pancakes_){
             return -1;
         }
         re_start = false;
-        for(int position = 0; position <= num_pancakes_ + 1; ++position){
-            /// Good edge of type 1
-            if(position == 1 && CheckRedArcLeft(position)){
-                if(CheckType1(order_[position], order_[position] + 1)){
-                    Flip(positions_[order_[position] + 1] - 1);
-                    re_start = true;
-                }
-                if(CheckType1(order_[position], order_[position] - 1)) {
-                    Flip(positions_[order_[position] - 1] - 1);
-                    re_start = true;
-                }
+        if(CheckRedArcLeft(1)){
+            j_left = positions_[order_[1] - 1];
+            j_right = positions_[order_[1] + 1];
+            if(CheckType1(order_[1], order_[j_left])){
+//                std::cout<<"Type 1 "<<1<<" "<<j_left<<'\n';
+                Flip(j_left - 1);
+                re_start = true;
+                continue;
+            } else if (CheckType1(order_[1], order_[j_right])){
+//                std::cout<<"Type 1 "<<1<<" "<<j_right<<'\n';
+                Flip(j_right - 1);
+                re_start = true;
+                continue;
             }
-            /// Good edge of type 2
-            if(position != 0 && CheckRedArcRight(position)){
-                if(CheckType2(order_[position], order_[position] + 1)){
-                    int j = positions_[order_[position] + 1];
-                    Flip(j);
-                    Flip(j - position);
-                    re_start = true;
-                }
-                if(CheckType2(order_[position], order_[position] - 1)) {
-                    int j = positions_[order_[position] - 1];
-                    Flip(j);
-                    Flip(j - position);
-                    re_start = true;
-                }
+        }
+
+        for(int i = 1; i <= num_pancakes_; ++i){
+            j_left = positions_[order_[i] - 1];
+            j_right = positions_[order_[i] + 1];
+            if(i < j_left && j_left != num_pancakes_ && CheckType2(order_[i], order_[j_left])){
+//                std::cout<<"Type 2 "<<i<<" "<<j_left<<'\n';
+                Flip(j_left);
+                Flip(j_left - i);
+                re_start = true;
+                continue;
+            } else if (i < j_right && j_right != num_pancakes_ && CheckType2(order_[i], order_[j_right])){
+//                std::cout<<"Type 2 "<<i<<" "<<j_right<<'\n';
+                Flip(j_right);
+                Flip(j_right - i);
+                re_start = true;
+                continue;
             }
-            /// Good edge of type 3
-            if(CheckRedArcRight(position)){
-                if(CheckType3(order_[position], order_[position] + 1)){
-                    int j = positions_[order_[position] + 1];
-                    Flip(position);
-                    Flip(j - 1);
-                    re_start = true;
-                }
-                if(CheckType3(order_[position], order_[position] - 1)) {
-                    int j = positions_[order_[position] - 1];
-                    Flip(position);
-                    Flip(j - 1);
-                    re_start = true;
-                }
+        }
+
+        for(int i = 1; i <= num_pancakes_; ++i){
+            j_left = positions_[order_[i] - 1];
+            j_right = positions_[order_[i] + 1];
+            if(i < j_left && CheckType3(order_[i], order_[j_left])){
+//                std::cout<<"Type 3 "<<i<<" "<<j_left<<'\n';
+                Flip(i);
+                Flip(j_left - 1);
+                re_start = true;
+                continue;
+            } else if (i < j_right && CheckType3(order_[i], order_[j_right])){
+//                std::cout<<"Type 3 "<<i<<" "<<j_right<<'\n';
+                Flip(i);
+                Flip(j_right - 1);
+                re_start = true;
+                continue;
             }
         }
     }
 
-    /*//Final step, Lemma 6
+//    std::cout<<"Last step\n\n";
+    /// Final step, Lemma 6
     std::vector<int> lengths;
     int p_actual, p_previous = 0;
     for (int i = 1; i <= num_pancakes_;) {
@@ -70,7 +82,7 @@ int Sort2Approximation::Sort() {
     for (int i = 0; i < lengths.size(); ++i) {
         Flip(num_pancakes_);
         Flip(num_pancakes_ - lengths[i]);
-    }*/
+    }
 
     return steps_;
 }

@@ -47,7 +47,7 @@ void SortPancakes::Flip(int elements) {
     if (elements <= 1)
         return;
     steps_++;
-    Print(elements);
+    //Print(elements);
     for (int i = 1; i <= elements / 2; ++i) {
         std::swap(order_[i], order_[elements - i + 1]);
         positions_[order_[i]] = i;
