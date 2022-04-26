@@ -9,41 +9,50 @@ int Sort2Approximation::Sort() {
 
     while (re_start) {
         re_start = false;
-        //Check blue arc of type 1 with i = 1
-        if (CheckType1(order_[1], order_[1] - 1)) {
-            Flip(positions_[order_[1] - 1] - 1);
-            re_start = true;
-        } else if (CheckType1(order_[1], order_[1] + 1)) {
-            Flip(positions_[order_[1] + 1] - 1);
-            re_start = true;
-        }
-        if (re_start)continue;
-        for (int i = 1; i < num_pancakes_; ++i) {
-            if (CheckType2(i, i + 1)) {
-                int pos1, pos2;
-                pos1 = std::min(positions_[i], positions_[i + 1]);
-                pos2 = std::max(positions_[i], positions_[i + 1]);
-                Flip(pos2);
-                Flip(pos2 - pos1);
-                re_start = true;
-                break;
+        for(int position = 0; position <= num_pancakes_ + 1; ++position){
+            /// Good edge of type 1
+            if(position == 1 && CheckRedArcLeft(position)){
+                if(CheckType1(order_[position], order_[position] + 1)){
+                    Flip(positions_[order_[position] + 1] - 1);
+                    re_start = true;
+                }
+                if(CheckType1(order_[position], order_[position] - 1)) {
+                    Flip(positions_[order_[position] - 1] - 1);
+                    re_start = true;
+                }
             }
-        }
-        if (re_start)continue;
-        for (int i = 0; i <= num_pancakes_; ++i) {
-            if (CheckType3(i, i + 1)) {
-                int pos1, pos2;
-                pos1 = std::min(positions_[i], positions_[i + 1]);
-                pos2 = std::max(positions_[i], positions_[i + 1]);
-                Flip(pos1);
-                Flip(pos2 - 1);
-                re_start = true;
-                break;
+            /// Good edge of type 2
+            if(position != 0 && CheckRedArcRight(position)){
+                if(CheckType2(order_[position], order_[position] + 1)){
+                    int j = positions_[order_[position] + 1];
+                    Flip(j);
+                    Flip(j - position);
+                    re_start = true;
+                }
+                if(CheckType2(order_[position], order_[position] - 1)) {
+                    int j = positions_[order_[position] - 1];
+                    Flip(j);
+                    Flip(j - position);
+                    re_start = true;
+                }
+            }
+            /// Good edge of type 3
+            if(CheckRedArcRight(position)){
+                if(CheckType3(order_[position], order_[position] + 1)){
+                    int j = positions_[order_[position] + 1];
+                    Flip(position);
+                    Flip(j - 1);
+                    re_start = true;
+                }
+                if(CheckType3(order_[position], order_[position] - 1)) {
+                    int j = positions_[order_[position] - 1];
+                    Flip(position);
+                    Flip(j - 1);
+                    re_start = true;
+                }
             }
         }
     }
-    std::cout << "Final Sorting\n";
-    Print();
 
     //Final step, Lemma 6
     std::vector<int> lengths;
@@ -63,28 +72,30 @@ int Sort2Approximation::Sort() {
     return steps_;
 }
 
-int Sort2Approximation::LeftPancake(int pancake) {
+int Sort2Approximation::LeftPancake(int pancake) const {
     return order_[positions_[pancake] - 1];
 }
 
-int Sort2Approximation::RightPancake(int pancake) {
+int Sort2Approximation::RightPancake(int pancake) const {
     return order_[positions_[pancake] + 1];
 }
 
-bool Sort2Approximation::CheckType1(int pancake1, int pancake2) {
-    if (positions_[pancake1] > positions_[pancake2])
-        std::swap(pancake1, pancake2);
-    return (abs(LeftPancake(pancake1) - pancake1) != 1 && abs(LeftPancake(pancake2) - pancake2) != 1);
+bool Sort2Approximation::CheckType1(int pancake1, int pancake2) const {
+    return CheckRedArcLeft(positions_[pancake1]) && CheckRedArcLeft(positions_[pancake2]);
 }
 
-bool Sort2Approximation::CheckType2(int pancake1, int pancake2) {
-    if (positions_[pancake1] > positions_[pancake2])
-        std::swap(pancake1, pancake2);
-    return (abs(RightPancake(pancake1) - pancake1) != 1 && abs(RightPancake(pancake2) - pancake2) != 1);
+bool Sort2Approximation::CheckType2(int pancake1, int pancake2) const {
+    return CheckRedArcRight(positions_[pancake1]) && CheckRedArcRight(positions_[pancake2]);
 }
 
-bool Sort2Approximation::CheckType3(int pancake1, int pancake2) {
-    if (positions_[pancake1] > positions_[pancake2])
-        std::swap(pancake1, pancake2);
-    return (abs(RightPancake(pancake1) - pancake1) != 1 && abs(LeftPancake(pancake2) - pancake2) != 1);
+bool Sort2Approximation::CheckType3(int pancake1, int pancake2) const {
+    return CheckRedArcRight(positions_[pancake1]) && CheckRedArcLeft(positions_[pancake2]);
+}
+
+bool Sort2Approximation::CheckRedArcLeft(int position) const {
+    return position > 0 && abs(order_[position - 1] - order_[position]) != 1;
+}
+
+bool Sort2Approximation::CheckRedArcRight(int position) const {
+    return position <= num_pancakes_ && abs(order_[position] - order_[position + 1]) != 1;
 }

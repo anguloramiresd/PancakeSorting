@@ -70,3 +70,11 @@ void SortPancakes::Print() const {
     Print(num_pancakes_ + 2);
 }
 
+std::vector<int> SortPancakes::GetPermutation() const {
+    std::vector<int> permutation(num_pancakes_);
+    for(size_t i = 1; i <= num_pancakes_; ++i){
+        permutation[i - 1] = order_[i];
+    }
+    return permutation;
+}
+

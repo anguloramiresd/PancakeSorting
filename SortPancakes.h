@@ -25,6 +25,7 @@ public:
     ~SortPancakes() = default;
     void Print() const;
     virtual int Sort() = 0;
+    std::vector<int> GetPermutation() const;
 };
 
 

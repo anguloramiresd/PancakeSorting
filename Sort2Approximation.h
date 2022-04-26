@@ -9,11 +9,13 @@
 
 class Sort2Approximation : public SortPancakes {
 private:
-    int LeftPancake(int pancake);
-    int RightPancake(int pancake);
-    bool CheckType1(int pancake1, int pancake2);
-    bool CheckType2(int pancake1, int pancake2);
-    bool CheckType3(int pancake1, int pancake2);
+    int LeftPancake(int pancake) const;
+    int RightPancake(int pancake) const;
+    bool CheckType1(int pancake1, int pancake2) const;
+    bool CheckType2(int pancake1, int pancake2) const;
+    bool CheckType3(int pancake1, int pancake2) const;
+    bool CheckRedArcLeft(int position) const;
+    bool CheckRedArcRight(int position) const;
 public:
     using SortPancakes::SortPancakes;
     int Sort() override;
