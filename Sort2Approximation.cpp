@@ -8,6 +8,9 @@ int Sort2Approximation::Sort() {
     bool re_start = true;
 
     while (re_start) {
+        if(steps_ >= 4*num_pancakes_){
+            return -1;
+        }
         re_start = false;
         for(int position = 0; position <= num_pancakes_ + 1; ++position){
             /// Good edge of type 1
@@ -54,7 +57,7 @@ int Sort2Approximation::Sort() {
         }
     }
 
-    //Final step, Lemma 6
+    /*//Final step, Lemma 6
     std::vector<int> lengths;
     int p_actual, p_previous = 0;
     for (int i = 1; i <= num_pancakes_;) {
@@ -67,7 +70,7 @@ int Sort2Approximation::Sort() {
     for (int i = 0; i < lengths.size(); ++i) {
         Flip(num_pancakes_);
         Flip(num_pancakes_ - lengths[i]);
-    }
+    }*/
 
     return steps_;
 }
