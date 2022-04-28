@@ -16,7 +16,6 @@ int Sort3Approximation::Sort() {
             Flip(pos_pancake);
             steps_++;
         }
-
         Flip(i);
         steps_++;
     }

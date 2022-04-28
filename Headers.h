@@ -1,7 +1,6 @@
 //
 // Created by dieguin on 28/3/22.
 //
-
 #ifndef PANCAKESORTING_HEADERS_H
 #define PANCAKESORTING_HEADERS_H
 

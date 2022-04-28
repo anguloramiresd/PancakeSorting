@@ -10,6 +10,7 @@
 class Sort3Approximation : public SortPancakes {
 public:
     using SortPancakes::SortPancakes;
+
     int Sort() override;
 };
 

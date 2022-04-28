@@ -15,16 +15,24 @@ protected:
     std::vector<int> positions_;
 
     int SearchPancake(int pancake) const;
+
     void Flip(int elements);
+
     void Print(int pos_spatula) const;
 
 public:
     explicit SortPancakes(int size);
-    explicit SortPancakes(const std::vector<int>& permutation);
+
+    explicit SortPancakes(const std::vector<int> &permutation);
+
     SortPancakes(const SortPancakes &other) = default;
+
     ~SortPancakes() = default;
+
     void Print() const;
+
     virtual int Sort() = 0;
+
     std::vector<int> GetPermutation() const;
 };
 

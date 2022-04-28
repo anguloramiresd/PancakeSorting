@@ -34,7 +34,7 @@ SortPancakes::SortPancakes(const std::vector<int> &permutation) {
     }
 
     positions_.resize(num_pancakes_ + 2);
-    for (int i = 0; i <= num_pancakes_; ++i) {
+    for (int i = 0; i <= num_pancakes_ + 1; ++i) {
         positions_[order_[i]] = i;
     }
 }
@@ -47,7 +47,7 @@ void SortPancakes::Flip(int elements) {
     if (elements <= 1)
         return;
     steps_++;
-    //Print(elements);
+//    Print(elements);
     for (int i = 1; i <= elements / 2; ++i) {
         std::swap(order_[i], order_[elements - i + 1]);
         positions_[order_[i]] = i;
@@ -72,7 +72,7 @@ void SortPancakes::Print() const {
 
 std::vector<int> SortPancakes::GetPermutation() const {
     std::vector<int> permutation(num_pancakes_);
-    for(size_t i = 1; i <= num_pancakes_; ++i){
+    for (size_t i = 1; i <= num_pancakes_; ++i) {
         permutation[i - 1] = order_[i];
     }
     return permutation;

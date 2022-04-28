@@ -7,12 +7,24 @@
 
 #include "SortPancakes.h"
 
-class SortExhaustive : public SortPancakes {
+class SortExhaustive {
 private:
+    size_t num_pancakes_;
+    std::map<std::vector<int>, int> distance;
+    std::vector<int> sorted;
+
     static void Flip(std::vector<int> &aux, int elements);
+
 public:
-    using SortPancakes::SortPancakes;
-    int Sort() override;
+    explicit SortExhaustive(int size);
+
+    SortExhaustive(const SortExhaustive &other) = default;
+
+    ~SortExhaustive() = default;
+
+    void Sort();
+
+    int GetSteps(const std::vector<int> &objective);
 };
 
 
