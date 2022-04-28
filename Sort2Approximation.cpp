@@ -5,6 +5,7 @@
 #include "Sort2Approximation.h"
 
 int Sort2Approximation::Sort() {
+    std::vector<int> original = order_;
     std::vector<int> sorted = order_;
     std::sort(sorted.begin(), sorted.end());
     bool re_start = true;
@@ -34,13 +35,13 @@ int Sort2Approximation::Sort() {
         for (int i = 1; i <= num_pancakes_; ++i) {
             j_left = positions_[order_[i] - 1];
             j_right = positions_[order_[i] + 1];
-            if (i < j_left && j_left != num_pancakes_ && CheckType2(order_[i], order_[j_left])) {
+            if (i < j_left && j_left != num_pancakes_ + 1 && CheckType2(order_[i], order_[j_left])) {
 //                std::cout<<"Type 2 "<<i<<" "<<j_left<<'\n';
                 Flip(j_left);
                 Flip(j_left - i);
                 re_start = true;
                 continue;
-            } else if (i < j_right && j_right != num_pancakes_ && CheckType2(order_[i], order_[j_right])) {
+            } else if (i < j_right && j_right != num_pancakes_ + 1 && CheckType2(order_[i], order_[j_right])) {
 //                std::cout<<"Type 2 "<<i<<" "<<j_right<<'\n';
                 Flip(j_right);
                 Flip(j_right - i);
@@ -76,6 +77,9 @@ int Sort2Approximation::Sort() {
         int p_actual, p_previous = 0;
         for (int i = 1; i <= num_pancakes_;) {
             p_actual = order_[i];
+            if(p_actual == 0 || p_actual > num_pancakes_){
+                return -1;
+            }
             lengths.push_back(p_actual - p_previous);
             p_previous = p_actual;
             i = p_actual + 1;

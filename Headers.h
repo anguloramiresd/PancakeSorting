@@ -5,6 +5,7 @@
 #define PANCAKESORTING_HEADERS_H
 
 #include <algorithm>
+#include <chrono>
 #include <iostream>
 #include <map>
 #include <queue>
