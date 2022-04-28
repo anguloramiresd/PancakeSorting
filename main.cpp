@@ -4,62 +4,82 @@
 #include "Sort2Approximation.h"
 
 int main() {
-    int size;
-    std::string type;
-    std::cin >> type >> size;
-    std::vector<int> original(size);
-    SortPancakes *pancakes;
-    std::vector<bool> active(3, false);
+    size_t max_size;
+    std::cin >> max_size;
+    std::vector<double> time_exhaustive(max_size + 1), time_approx3(max_size + 1, 0), time_approx2(max_size + 1, 0);
+    SortExhaustive* sort_exhaustive;
+    Sort3Approximation* sort_approx3;
+    Sort2Approximation* sort_approx2;
+    std::vector<double> ratio_approx3(max_size + 1, 0), ratio_approx2(max_size + 1, 0);
+    for(size_t size = 1; size <= max_size; ++size){
+        /// Run and timing
+        auto start = std::chrono::high_resolution_clock::now();
+        sort_exhaustive = new SortExhaustive(size);
+        sort_exhaustive->Sort();
+        auto ending = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> time_ms = ending - start;
+        time_exhaustive[size] = time_ms.count();
 
-    if (type == "1st") {
-        active[0] = true;
-    } else if (type == "2nd") {
-        active[1] = true;
-    } else if (type == "3rd") {
-        active[2] = true;
-    } else if (type == "All") {
-        active[0] = true;
-        active[1] = true;
-        active[2] = true;
-    } else {
-        std::cout << "Invalid run\n";
-        return 0;
-    }
-
-    std::vector<int> sorted(size);
-    for (size_t i = 0; i < size; ++i) {
-        sorted[i] = (int) i + 1;
-    }
-
-    SortExhaustive *pancakes_exhaustive;
-    if (active[0]) {
-        pancakes_exhaustive = new SortExhaustive(size);
-        pancakes_exhaustive->Sort();
-    }
-
-    while (std::cin >> original[0]) {
-        for (size_t i = 1; i < original.size(); ++i) {
-            std::cin >> original[i];
+        std::vector<int> list(size);
+        for(size_t i = 0; i < size; ++i){
+            list[i] = i + 1;
         }
 
-        if (active[0]) {
-            std::cout << pancakes_exhaustive->GetSteps(original) << '\n';
-        }
-        if (active[1]) {
-            pancakes = new Sort3Approximation(original);
-            std::cout << pancakes->Sort() << '\n';
-        }
-        if (active[2]) {
-            pancakes = new Sort2Approximation(original);
-            std::cout << pancakes->Sort() << '\n';
+        std::vector<int> sorted = list;
+        size_t c_approx3 = 0, c_approx2 = 0, steps;
+        do{
+            /// 3 - Approximation
+            /// Run, and timing
+            c_approx3++;
+            start = std::chrono::high_resolution_clock::now();
+            sort_approx3 = new Sort3Approximation(list);
+            steps = sort_approx3->Sort();
+            ending = std::chrono::high_resolution_clock::now();
+            time_ms = ending - start;
+            time_approx3[size] += time_ms.count();
 
-            if (sorted != pancakes->GetPermutation()) {
-                std::cout << "Fail\n";
-            } else {
-                std::cout << "Ok\n";
+            /// Ratio adding
+            ratio_approx3[size] += (double(std::max(steps, 1lu))/std::max(sort_exhaustive->GetSteps(list), 1));
+
+            /// 2 - Approximation
+            /// Run, and timing
+            start = std::chrono::high_resolution_clock::now();
+            sort_approx2 = new Sort2Approximation(list);
+            steps = sort_approx2->Sort();
+            ending = std::chrono::high_resolution_clock::now();
+            time_ms = ending - start;
+
+            /// Ratio adding
+            if(sorted == sort_approx2->GetPermutation()) {
+                c_approx2++;
+                time_approx2[size] += time_ms.count();
+                ratio_approx2[size] += (double(std::max(steps, 1lu)) / std::max(sort_exhaustive->GetSteps(list), 1));
             }
-        }
+        }while(std::next_permutation(list.begin(), list.end()));
+        time_approx2[size] /= double(c_approx2);
+        time_approx3[size] /= double(c_approx3);
+        ratio_approx2[size] /= double(c_approx2);
+        ratio_approx3[size] /= double(c_approx3);
     }
-
+    for(size_t i=1; i <= max_size;++i){
+        std::cout<< time_exhaustive[i]<<" ";
+    }
+    std::cout<<'\n';
+    for(size_t i=1; i <= max_size;++i){
+        std::cout<< time_approx3[i]<<" ";
+    }
+    std::cout<<'\n';
+    for(size_t i=1; i <= max_size;++i){
+        std::cout<< time_approx2[i]<<" ";
+    }
+    std::cout<<'\n';
+    for(size_t i=1; i <= max_size;++i){
+        std::cout<< ratio_approx3[i]<<" ";
+    }
+    std::cout<<'\n';
+    for(size_t i=1; i <= max_size;++i){
+        std::cout<< ratio_approx2[i]<<" ";
+    }
+    std::cout<<'\n';
     return 0;
 }
