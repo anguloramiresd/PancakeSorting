@@ -74,8 +74,12 @@ int Sort2Approximation::Sort() {
     /// Final step, Lemma 6
     if (order_ != sorted) {
         std::vector<int> lengths;
-        int p_actual, p_previous = 0;
-        for (int i = 1; i <= num_pancakes_;) {
+        int p_actual, p_previous = 0, upper;
+        for(upper=num_pancakes_; upper >= 0; --upper){
+            if(order_[upper] != upper)
+                break;
+        }
+        for (int i = 1; i < upper;) {
             p_actual = order_[i];
             if(p_actual == 0 || p_actual > num_pancakes_){
                 return -1;
@@ -86,8 +90,8 @@ int Sort2Approximation::Sort() {
         }
 
         for (int i = 0; i < lengths.size(); ++i) {
-            Flip(num_pancakes_);
-            Flip(num_pancakes_ - lengths[i]);
+            Flip(upper);
+            Flip(upper - lengths[i]);
         }
     }
 
