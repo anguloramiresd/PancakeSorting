@@ -12,7 +12,7 @@ Now let&#39;s picture a spatula, we can insert this spatula between two pancakes
 
 A _pancake number_ is the minimum number of flips needed to sort a given number of pancakes, where a stack of sorted pancakes has the biggest pancake at the bottom of the stack, and every pancake above the bottom one is smaller than the pancake below.
 
-It has been proved that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between 1.0714N[[1]](#1) and 1.6364 N[[2]](#2) flips, but there is not an exact formula yet.
+It has been proved that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between ___1.0714N___[[1]](#1) and ___1.6364 N___[[2]](#2) flips, but there is not an exact formula yet.
 
 
 ## Flip
@@ -53,7 +53,7 @@ We can prove that in the worst case, this method will take at most ___2N - 2___ 
 
 ### 2-Approximation
 
-And for the best approximation algorithm we will consider(and also the best existing [[3]](#3) ), we will use the third representation mentioned.
+And for the best approximation algorithm we will consider(and also the best existing[[3]](#3)), we will use the third representation mentioned.
 
 We start by noticing that each red edge in our initial representation will take at most 2 Flips to disappear. (This is why it's called a 2-Approximation)<br>
 A representation with no red edges, is already sorted.
