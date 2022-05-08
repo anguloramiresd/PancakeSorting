@@ -2,7 +2,7 @@
 // Created by dieguin on 24-04-22.
 //
 
-#include "SortPancakes.h"
+#include "include/SortPancakes.h"
 
 SortPancakes::SortPancakes(int size) : num_pancakes_(size) {
     /// We initialize the size of each pancake, from 1 to size

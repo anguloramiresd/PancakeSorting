@@ -2,7 +2,7 @@
 // Created by dieguin on 25-04-22.
 //
 
-#include "Sort3Approximation.h"
+#include "include/Sort3Approximation.h"
 
 int Sort3Approximation::Sort() {
     int pos_pancake;

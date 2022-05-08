@@ -2,7 +2,7 @@
 // Created by dieguin on 25-04-22.
 //
 
-#include "Sort2Approximation.h"
+#include "include/Sort2Approximation.h"
 
 int Sort2Approximation::Sort() {
     std::vector<int> original = order_;
@@ -75,13 +75,13 @@ int Sort2Approximation::Sort() {
     if (order_ != sorted) {
         std::vector<int> lengths;
         int p_actual, p_previous = 0, upper;
-        for(upper=num_pancakes_; upper >= 0; --upper){
-            if(order_[upper] != upper)
+        for (upper = num_pancakes_; upper >= 0; --upper) {
+            if (order_[upper] != upper)
                 break;
         }
         for (int i = 1; i < upper;) {
             p_actual = order_[i];
-            if(p_actual == 0 || p_actual > num_pancakes_){
+            if (p_actual == 0 || p_actual > num_pancakes_) {
                 return -1;
             }
             lengths.push_back(p_actual - p_previous);
