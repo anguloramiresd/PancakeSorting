@@ -2,63 +2,135 @@
 
 _Pancake Sorting is scientifically known as Sorting by Prefix Reversal, but we will call it Pancake Sorting to give a meaning that has some curious implication in real life._
 
-Let&#39;s imagine we have a stack of n pancakes, one on top of another, and they all have different sizes, for the purpose of the exercise, well assign an integer value to represent the size of each pancake.
+Let&#39;s imagine we have a stack of $N$ pancakes, one on top of another, and they all have different sizes, for the purpose of the exercise, well assign an integer value to represent the size of each pancake.
 
 Now let&#39;s picture a spatula, we can insert this spatula between two pancakes at any point of our stack, and flip all the pancakes that are on top of the spatula.
 
 <p align="center">
-  <img src="https://github.com/anguloramiresd/PancakeSorting/blob/main/pancakes.PNG" width="650" title="example">
+  <img src="./img/Flip.png" width="500" title="example">
 </p>
 
 A _pancake number_ is the minimum number of flips needed to sort a given number of pancakes, where a stack of sorted pancakes has the biggest pancake at the bottom of the stack, and every pancake above the bottom one is smaller than the pancake below.
 
-It has been shown that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between ___1.0714 N___ and ___1.6364 N___ flips, but there is not an exact formula yet.
+It has been proved that for any stack of $N$ pancakes, the minimum number of flips required to sort it lies between $1.0714N$[[1]](#1) and $1.6364 N$[[2]](#2) flips, but there is not an exact formula yet.
 
-[Lower Bound paper](https://www.sciencedirect.com/science/article/pii/0012365X79900682?via%3Dihub)
 
-[Upper Bound paper](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)
+## Flip
+We will consider the following function:
+> Flip($X$): Takes the first $X$ pancakes in the pile, and flips them, reversing their order.
 
-There are numerous ways to represent this problem on a computer, including graphs, permutations, strings and lists. We will try to take as many approaches as possible during the development of this project.
+## Representation of the pancake pile
 
-# Algorithms
+There are numerous ways to represent this problem on a computer, including graphs, permutations, strings and lists. For this project we will use 3 different approaches to represent the order of the pancake pile:
+1. A graph, where each node is a possible permutation, and there exists an edge between two nodes if there is a Flip that converts one node into the other.
+2. A list of size $N$, where each position of the list represents the size of that pancake in that position. The first element of this list is the top of the pancakes pile.
+3. The same list mentioned above with some extra characteristics:
+    - We will also consider two imaginary pancakes with values: $0$ and $N+1$
+    - If two adjacent pancakes don't have adjacent values, we consider there is a red edge connecting them.
+    - If two pancakes have adjacent values, but are not adjacent in the list, we consider there is a blue edge connecting them.
 
-### Inefficient in number of flips, but uses linear time.
-There are simple algorithms, but inefficient for the purpose of the problem.
-1. Pick the biggest pancake not sorted yet, put the spatula right under this pancake.
-2. Flip
-3. Now that the biggest pancake not sorted yet is on top, put the spatula right above the smallest sorted pancake.
-4. Flip
+## Algorithms used
+
+### Exhaustive search
+Of course this approach has to be considered, in order to compare the efficiency of our other algorithms for small cases.<br>
+We will use the first representation mentioned above. <br>
+We will run a BFS from the node where the list is sorted, and calculate all distances to every possible permutation.<br>
+Finally we will have the minimal number of flips it takes to get from the sorted pancake pile, to any other permutation, and vice versa, which is exactly what we wanted. 
+
+This method will guarantee we get an optimal result, the only problem is that it has a big time complexity, $O(N!)$ and the space complexity is $O(N*N!)$
+
+### 3-Approximation
+
+For this Algorithm we will use the second representation mentioned.
+
+1. Pick the biggest pancake not sorted yet, with position equal to $X$.
+2. Flip($X$)
+3. Now that the biggest pancake not sorted yet is on top, let's take $X$ as the value of the pancake on the top.
+4. Flip($X$)
 5. Repeat step 1 until all the pancakes are sorted.
 
-We can prove by induction that in the worst case, this method will take at most ___2N - 3___ flips.
+We can prove that in the worst case, this method will take at most $2N - 2$ flips for $N \ge 2$.
 
-### Inefficient in time, but efficient in result.
-We can as well test all possible outcome, doing a ridiculous recursion.
-1. Put the spatula under the i-th pancake(i = 1, ..., n) (Yes, we test for every pancake)
-2. Flip
-3. This is now our new pile of pancakes, if it's sorted we stop.
-4. Repeat recursiom
+### 2-Approximation
 
-This will create a recursion that will surely find a result as it's searching for all possible scenario, but it's really innefficient in time and memory, as it will in the worst of the cases find all the n! permutations and the steps that it takes to get to each of them.
+And for the best approximation algorithm we will consider(and also the best existing [[3]](#3) ), we will use the third representation mentioned.
 
-### Efficient in time, efficient in result?
-Well this is tricky, there are a couple of algorithms that can approximate the result of optimal pancake sorting, but they can only approximate, we can't know if they have the exact result.
-        
-[Algorithms possibly used](https://reader.elsevier.com/reader/sd/pii/S1570866715000507?token=E25638B271D911428C086B8074D0A12FAFB54738FF8FAA2636033D3851A855879B2647E0B334D13B3A04E71A5B43E4A8&originRegion=eu-west-1&originCreation=20220321165136)
+We start by noticing that each red edge in our initial representation will take at most 2 Flips to disappear. (This is why it's called a 2-Approximation)<br>
+A representation with no red edges, is already sorted.
 
-# Proof Pancake sorting is NP-Hard
-Pancake sort can be reduced from the NP-Hard problem 3-SAT, which implies that Pancake Sorting is also NP-Hard.
-We can see the proof of such assertion in the following [paper](https://arxiv.org/abs/1111.0434v1).
+In order to eliminate one red edge we will consider the next 4 possible situations in our representation. For every blue edge, one of these 4 possible scenarios must be given.
+<p align="center">
+  <img src="./img/BreakpointGraph.png" width="700" title="Breakpoint graph">
+</p>
 
-# Practical Applications
+These situations are given between two pancakes $i$ and $j$, where $i < j$
+If we have the following scenarios, we can get rid of one red edge.
+- Blue edge of Type 1, with $i = 1$ 
+> Flip $(j-1)$
+- Blue edge of Type 2, where $i \ne 0$ and $j \ne N + 1$ 
+> Flip $(j)$<br> Flip $(j-i)$
+- Blue edge of Type 3
+> Flip $(i)$<br>Flip $(j - 1)$
+
+Once we are finished with this process, we will have:
+- One blue edge of type 2, with $i = 0$
+- One blue edge of type 1, with $i \ne 0$
+- Other blue edges of type 4
+
+And also, our list will have the following form:<br>
+$p_1, p_1 - 1, ... , 1, p_2, p_2 - 1, ... , p_1 + 1, ... , N, ..., p_{k-1} + 1$<br>
+Where $k$ is the number of red edges remaining. <br>
+This is a simple situation to solve in exactly $2k$ steps.
+> Flip $(N)$<br>Flip $(N - p_1)$<br>Flip $(N)$<br>Flip $(N - (p_2 - p_1))$<br>...<br>Flip $(N)$<br>Flip $(N - (N - p_k))$
+
+And the pancake pile will be finally sorted.
+
+## Proof Pancake sorting is NP-Hard
+Pancake sort can be reduced from the NP-Hard problem 3-SAT, which implies that Pancake Sorting is also NP-Hard[[4]](#4).
+
+## Practical Applications
 There are some interesting practical purposes for this problem - in comparative genomics, or parallel processor networks, in which it can provide an effective routing algorithm between processors.
 
-    But who needs practical uses of Sorting by Prefix Reversal when we can simply be hungry for sorted pancakes?
+> But who needs practical uses of Sorting by Prefix Reversal when we can simply be hungry for sorted pancakes?
 
 
 <p align="center">
-  <img src="https://img.favpng.com/1/4/22/pancake-breakfast-english-muffin-waffle-bacon-png-favpng-svq3yuXZXUZwZ4jyTR3seYrfE_t.jpg" width="350" title="pancakes">
+  <img src="./img/Yummy.jpg" width="350" title="pancakes">
 </p>
 
+## Build the project
+Once you have cloned or downloaded the project and extracted it.<br>
+Go to the root directory of the project, open the Terminal and run the following commands:
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+### Execute the user-directed program
+In order to execute the program, execute the following command from the Terminal, from the "build" directory
+```
+./Run
+```
+
+## References
 
 
+<a id="1">[1]</a> 
+William H.Gates, Christos H.Papadimitriou:
+[Bounds for sorting by prefix reversal.](https://www.sciencedirect.com/science/article/pii/0012365X79900682?via%3Dihub)<br>
+
+<a id="2">[2]</a> 
+B.Chitturi, W.Fahle, Z.Meng, L.Morales, C.O.Shields, I.H.Sudborough, W.Voit:
+[An $18/11$ upper bound for sorting by prefix reversals.](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)<br>
+
+<a id="3">[3]</a> 
+Johannes Fischer and Simon W. Ginzinger:
+[A 2-Approximation Algorithm for Sorting by Prefix Reversals.](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.68.9174&rep=rep1&type=pdf)<br>
+[_Algorithms - ESA 2005_](https://link.springer.com/content/pdf/10.1007/11561071.pdf): 415-425, 2005
+
+<a id="4">[4]</a> 
+Laurent Bulteau, Guillaume Fertin, Irena Rusu:
+[Pancake Flipping is Hard](https://arxiv.org/abs/1111.0434)<br>

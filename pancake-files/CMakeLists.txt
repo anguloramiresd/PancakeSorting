@@ -1,18 +1,18 @@
 project(pancake-files)
 
 set(HEADER_FILES
-        Headers.h
-        Sort2Approximation.h
-        Sort3Approximation.h
-        SortExhaustive.h
-        SortPancakes.h
+        include/Headers.h
+        include/Sort2Approximation.h
+        include/Sort3Approximation.h
+        include/SortExhaustive.h
+        include/SortPancakes.h
         )
 
 set(SOURCE_FILES
-        Sort2Approximation.cpp
-        Sort3Approximation.cpp
-        SortExhaustive.cpp
-        SortPancakes.cpp
+        src/Sort2Approximation.cpp
+        src/Sort3Approximation.cpp
+        src/SortExhaustive.cpp
+        src/SortPancakes.cpp
         )
 
 add_library(pancake-files STATIC ${SOURCE_FILES} ${HEADER_FILES})

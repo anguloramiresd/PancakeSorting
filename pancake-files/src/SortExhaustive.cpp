@@ -2,7 +2,7 @@
 // Created by dieguin on 24-04-22.
 //
 
-#include "SortExhaustive.h"
+#include "include/SortExhaustive.h"
 
 SortExhaustive::SortExhaustive(int size) : num_pancakes_(size) {
     distance.clear();

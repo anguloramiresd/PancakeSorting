@@ -2,3 +2,4 @@
 .idea
 /build/
 /.ipynb_checkpoints/
+/GUIApp.py

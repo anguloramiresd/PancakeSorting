@@ -8,4 +8,8 @@ add_subdirectory(pancake-files)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(PancakeSorting pancake-files/main.cpp pancake-files/Headers.h pancake-files/SortPancakes.cpp pancake-files/SortPancakes.h pancake-files/SortExhaustive.cpp pancake-files/SortExhaustive.h pancake-files/Sort3Approximation.cpp pancake-files/Sort3Approximation.h pancake-files/Sort2Approximation.cpp pancake-files/Sort2Approximation.h)
+add_executable(ExhaustiveMeasure measure.cpp)
+add_executable(Run user.cpp)
+
+target_link_libraries(Run pancake-files)
+target_link_libraries(ExhaustiveMeasure pancake-files)
