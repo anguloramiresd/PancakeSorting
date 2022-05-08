@@ -2,7 +2,7 @@
 
 _Pancake Sorting is scientifically known as Sorting by Prefix Reversal, but we will call it Pancake Sorting to give a meaning that has some curious implication in real life._
 
-Let&#39;s imagine we have a stack of $N$ pancakes, one on top of another, and they all have different sizes, for the purpose of the exercise, well assign an integer value to represent the size of each pancake.
+Let&#39;s imagine we have a stack of ___N___ pancakes, one on top of another, and they all have different sizes, for the purpose of the exercise, we will assign an integer value to represent the size of each pancake.
 
 Now let&#39;s picture a spatula, we can insert this spatula between two pancakes at any point of our stack, and flip all the pancakes that are on top of the spatula.
 
@@ -12,20 +12,20 @@ Now let&#39;s picture a spatula, we can insert this spatula between two pancakes
 
 A _pancake number_ is the minimum number of flips needed to sort a given number of pancakes, where a stack of sorted pancakes has the biggest pancake at the bottom of the stack, and every pancake above the bottom one is smaller than the pancake below.
 
-It has been proved that for any stack of $N$ pancakes, the minimum number of flips required to sort it lies between $1.0714N$[[1]](#1) and $1.6364 N$[[2]](#2) flips, but there is not an exact formula yet.
+It has been proved that for any stack of ___N___ pancakes, the minimum number of flips required to sort it lies between 1.0714N[[1]](#1) and 1.6364 N[[2]](#2) flips, but there is not an exact formula yet.
 
 
 ## Flip
 We will consider the following function:
-> Flip($X$): Takes the first $X$ pancakes in the pile, and flips them, reversing their order.
+> Flip(___X___): Takes the first ___X___ pancakes in the pile, and flips them, reversing their order.
 
 ## Representation of the pancake pile
 
 There are numerous ways to represent this problem on a computer, including graphs, permutations, strings and lists. For this project we will use 3 different approaches to represent the order of the pancake pile:
 1. A graph, where each node is a possible permutation, and there exists an edge between two nodes if there is a Flip that converts one node into the other.
-2. A list of size $N$, where each position of the list represents the size of that pancake in that position. The first element of this list is the top of the pancakes pile.
+2. A list of size ___N___, where each position of the list represents the size of that pancake in that position. The first element of this list is the top of the pancakes pile.
 3. The same list mentioned above with some extra characteristics:
-    - We will also consider two imaginary pancakes with values: $0$ and $N+1$
+    - We will also consider two imaginary pancakes with values: ___0___ and ___N+1___
     - If two adjacent pancakes don't have adjacent values, we consider there is a red edge connecting them.
     - If two pancakes have adjacent values, but are not adjacent in the list, we consider there is a blue edge connecting them.
 
@@ -37,19 +37,19 @@ We will use the first representation mentioned above. <br>
 We will run a BFS from the node where the list is sorted, and calculate all distances to every possible permutation.<br>
 Finally we will have the minimal number of flips it takes to get from the sorted pancake pile, to any other permutation, and vice versa, which is exactly what we wanted. 
 
-This method will guarantee we get an optimal result, the only problem is that it has a big time complexity, $O(N!)$ and the space complexity is $O(N*N!)$
+This method will guarantee we get an optimal result, the only problem is that it has a big time complexity, ___O(N!)___ and the space complexity is ___O(N*N!)___
 
 ### 3-Approximation
 
 For this Algorithm we will use the second representation mentioned.
 
-1. Pick the biggest pancake not sorted yet, with position equal to $X$.
-2. Flip($X$)
-3. Now that the biggest pancake not sorted yet is on top, let's take $X$ as the value of the pancake on the top.
-4. Flip($X$)
+1. Pick the biggest pancake not sorted yet, with position equal to ___X___.
+2. Flip(___X___)
+3. Now that the biggest pancake not sorted yet is on top, let's take ___X___ as the value of the pancake on the top.
+4. Flip(___X___)
 5. Repeat step 1 until all the pancakes are sorted.
 
-We can prove that in the worst case, this method will take at most $2N - 2$ flips for $N \ge 2$.
+We can prove that in the worst case, this method will take at most ___2N - 2___ flips for ___N >= 2___.
 
 ### 2-Approximation
 
@@ -63,25 +63,25 @@ In order to eliminate one red edge we will consider the next 4 possible situatio
   <img src="./img/BreakpointGraph.png" width="700" title="Breakpoint graph">
 </p>
 
-These situations are given between two pancakes $i$ and $j$, where $i < j$
+These situations are given between two pancakes ___i___ and ___j___, where ___i < j___
 If we have the following scenarios, we can get rid of one red edge.
-- Blue edge of Type 1, with $i = 1$ 
-> Flip $(j-1)$
-- Blue edge of Type 2, where $i \ne 0$ and $j \ne N + 1$ 
-> Flip $(j)$<br> Flip $(j-i)$
+- Blue edge of Type 1, with ___i = 1___ 
+> Flip ___(j-1)___
+- Blue edge of Type 2, where ___i != 0___ and ___j != N + 1___ 
+> Flip ___(j)___ <br> Flip ___(j-i)___
 - Blue edge of Type 3
-> Flip $(i)$<br>Flip $(j - 1)$
+> Flip ___(i)___<br>Flip ___(j - 1)___
 
 Once we are finished with this process, we will have:
-- One blue edge of type 2, with $i = 0$
-- One blue edge of type 1, with $i \ne 0$
+- One blue edge of type 2, with ___i = 0___
+- One blue edge of type 1, with ___i != 0___
 - Other blue edges of type 4
 
 And also, our list will have the following form:<br>
-$p_1, p_1 - 1, ... , 1, p_2, p_2 - 1, ... , p_1 + 1, ... , N, ..., p_{k-1} + 1$<br>
-Where $k$ is the number of red edges remaining. <br>
-This is a simple situation to solve in exactly $2k$ steps.
-> Flip $(N)$<br>Flip $(N - p_1)$<br>Flip $(N)$<br>Flip $(N - (p_2 - p_1))$<br>...<br>Flip $(N)$<br>Flip $(N - (N - p_k))$
+___p1, p1 - 1, ... , 1, p2, p2 - 1, ... , p1 + 1, ... , N, ..., pk + 1___<br>
+Where ___k___ is the number of red edges remaining minus 1. <br>
+This is a simple situation to solve in exactly ___2k___ steps.
+> Flip ___(N)___<br>Flip ___(N - p1)___<br>Flip ___(N)___<br>Flip ___(N - (p2 - p1))___<br>...<br>Flip ___(N)___<br>Flip ___(N - (N - p_k))___
 
 And the pancake pile will be finally sorted.
 
@@ -124,7 +124,7 @@ William H.Gates, Christos H.Papadimitriou:
 
 <a id="2">[2]</a> 
 B.Chitturi, W.Fahle, Z.Meng, L.Morales, C.O.Shields, I.H.Sudborough, W.Voit:
-[An $18/11$ upper bound for sorting by prefix reversals.](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)<br>
+[An ___18/11___ upper bound for sorting by prefix reversals.](https://www.sciencedirect.com/science/article/pii/S0304397508003575?via%3Dihub)<br>
 
 <a id="3">[3]</a> 
 Johannes Fischer and Simon W. Ginzinger:
