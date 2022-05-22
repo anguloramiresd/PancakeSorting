@@ -98,7 +98,17 @@ There are some interesting practical purposes for this problem - in comparative 
   <img src="./img/Yummy.jpg" width="350" title="pancakes">
 </p>
 
-## Build the project
+## Requirements
+- CMake 3.20 or higher
+- Python3 with tkinter installed _(Only if you want to use the GUI)_
+
+## Using the GUI
+Go to the root directory of the project, open a Terminal and run the following command:
+```
+python3 GUIApp.py
+```
+
+## Build the project manually and run with C++ (No GUI)
 Once you have cloned or downloaded the project and extracted it.<br>
 Go to the root directory of the project, open the Terminal and run the following commands:
 
@@ -109,7 +119,7 @@ cmake ..
 make
 ```
 
-### Execute the user-directed program
+### Execute the user-directed program on C++
 In order to execute the program, execute the following command from the Terminal, from the "build" directory
 ```
 ./Run

@@ -20,12 +20,10 @@ int Sort2Approximation::Sort() {
             j_left = positions_[order_[1] - 1];
             j_right = positions_[order_[1] + 1];
             if (CheckType1(order_[1], order_[j_left])) {
-//                std::cout<<"Type 1 "<<1<<" "<<j_left<<'\n';
                 Flip(j_left - 1);
                 re_start = true;
                 continue;
             } else if (CheckType1(order_[1], order_[j_right])) {
-//                std::cout<<"Type 1 "<<1<<" "<<j_right<<'\n';
                 Flip(j_right - 1);
                 re_start = true;
                 continue;
@@ -36,13 +34,11 @@ int Sort2Approximation::Sort() {
             j_left = positions_[order_[i] - 1];
             j_right = positions_[order_[i] + 1];
             if (i < j_left && j_left != num_pancakes_ + 1 && CheckType2(order_[i], order_[j_left])) {
-//                std::cout<<"Type 2 "<<i<<" "<<j_left<<'\n';
                 Flip(j_left);
                 Flip(j_left - i);
                 re_start = true;
                 continue;
             } else if (i < j_right && j_right != num_pancakes_ + 1 && CheckType2(order_[i], order_[j_right])) {
-//                std::cout<<"Type 2 "<<i<<" "<<j_right<<'\n';
                 Flip(j_right);
                 Flip(j_right - i);
                 re_start = true;
@@ -55,13 +51,11 @@ int Sort2Approximation::Sort() {
             j_right = positions_[order_[i] + 1];
 
             if (i < j_left && CheckType3(order_[i], order_[j_left])) {
-//                std::cout<<"Type 3 "<<i<<" "<<j_left<<'\n';
                 Flip(i);
                 Flip(j_left - 1);
                 re_start = true;
                 continue;
             } else if (i < j_right && CheckType3(order_[i], order_[j_right])) {
-//                std::cout<<"Type 3 "<<i<<" "<<j_right<<'\n';
                 Flip(i);
                 Flip(j_right - 1);
                 re_start = true;
@@ -70,7 +64,6 @@ int Sort2Approximation::Sort() {
         }
     }
 
-//    std::cout<<"Last step\n\n";
     /// Final step, Lemma 6
     if (order_ != sorted) {
         std::vector<int> lengths;
@@ -96,14 +89,6 @@ int Sort2Approximation::Sort() {
     }
 
     return steps_;
-}
-
-int Sort2Approximation::LeftPancake(int pancake) const {
-    return order_[positions_[pancake] - 1];
-}
-
-int Sort2Approximation::RightPancake(int pancake) const {
-    return order_[positions_[pancake] + 1];
 }
 
 bool Sort2Approximation::CheckType1(int pancake1, int pancake2) const {
